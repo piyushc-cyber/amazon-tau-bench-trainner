@@ -1,246 +1,249 @@
 {
-    "env": "fund_finance",
-    "model_provider": "fireworks",
-    "model": "qwen3-coder-480b-a35b-instruct",
-    "num_trials": 3,
-    "temperature": 1,
-    "interface_num": 2,
-    "task": {
-        "user_id": "96",
-        "instruction": "You are Leah Shields, a compliance officer. You need to create buy trade of 300 quantity at a price of 70.8102 of 'Vasquez Thomas and Mack Ltd' instrument for 'Cooke LLC Income Fund' on 9th October 2025.",
-        "actions": [
-                    {
-                      "name": "search_user_entities",
-                      "arguments": {
-                        "entity_type": "users",
-                        "filters": {
+  "env": "fund_finance",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "96",
+    "instruction": "You are Leah Shields, a compliance officer. You need to create buy trade of 300 quantity at a price of 70.8102 of 'Vasquez Thomas and Mack Ltd' instrument for 'Cooke LLC Income Fund' on 9th October 2025.",
+      "actions": [
+                  {
+                    "name": "search_user_entities",
+                    "arguments": {
+                      "entity_type": "users",
+                      "filters": {
+                        "first_name": "Leah",
+                        "last_name": "Shields"
+                      }
+                    },
+                    "output": {
+                      "count": 1,
+                      "entity_type": "users",
+                      "results": [
+                        {
+                          "created_at": "2023-09-06T15:35:17",
+                          "email": "leahshields@hotmail.com",
+                          "first_name": "Leah",
+                          "last_name": "Shields",
+                          "role": "compliance_officer",
+                          "status": "active",
+                          "timezone": "Europe/London",
+                          "updated_at": "2024-03-31T21:12:25",
                           "user_id": "96"
                         }
-                      },
-                      "output": {
-                        "count": 1,
-                        "entity_type": "users",
-                        "results": [
-                          {
-                            "created_at": "2023-09-06T15:35:17",
-                            "email": "leahshields@hotmail.com",
-                            "first_name": "Leah",
-                            "last_name": "Shields",
-                            "role": "compliance_officer",
-                            "status": "active",
-                            "timezone": "Europe/London",
-                            "updated_at": "2024-03-31T21:12:25",
-                            "user_id": "96"
-                          }
-                        ],
-                        "success": true
+                      ],
+                      "success": true
+                    }
+                  },
+                  {
+                    "name": "check_approval",
+                    "arguments": {
+                      "action": "fund_management_setup",
+                      "requester_email": "leahshields@hotmail.com"
+                    },
+                    "output": {
+                      "approval_valid": true,
+                      "approved_by": [
+                        "fund_manager",
+                        "compliance_officer"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "search_fund_entities",
+                    "arguments": {
+                      "entity_type": "funds",
+                      "filters": {
+                        "name": "Cooke LLC Income Fund"
                       }
                     },
-                    {
-                      "name": "check_approval",
-                      "arguments": {
-                        "action": "fund_management_setup",
-                        "requester_email": "leahshields@hotmail.com"
-                      },
-                      "output": {
-                        "approval_valid": true,
-                        "approved_by": [
-                          "fund_manager",
-                          "compliance_officer"
-                        ]
-                      }
-                    },
-                    {
-                      "name": "search_fund_entities",
-                      "arguments": {
-                        "entity_type": "funds",
-                        "filters": {
-                          "name": "Cooke LLC Income Fund"
+                    "output": {
+                      "count": 1,
+                      "entity_type": "funds",
+                      "results": [
+                        {
+                          "created_at": "2022-09-16T05:54:14",
+                          "fund_id": "20",
+                          "fund_type": "multi_asset_funds",
+                          "manager_id": "43",
+                          "name": "Cooke LLC Income Fund",
+                          "size": 284746105.84,
+                          "status": "open",
+                          "updated_at": "2025-01-01T04:54:13"
                         }
-                      },
-                      "output": {
-                        "count": 1,
-                        "entity_type": "funds",
-                        "results": [
-                          {
-                            "created_at": "2022-09-16T05:54:14",
-                            "fund_id": "20",
-                            "fund_type": "multi_asset_funds",
-                            "manager_id": "43",
-                            "name": "Cooke LLC Income Fund",
-                            "size": 284746105.84,
-                            "status": "open",
-                            "updated_at": "2025-01-01T04:54:13"
-                          }
-                        ],
-                        "success": true
+                      ],
+                      "success": true
+                    }
+                  },
+                  {
+                    "name": "search_instrument_entities",
+                    "arguments": {
+                      "entity_type": "instruments",
+                      "filters": {
+                        "name": "Vasquez Thomas and Mack Ltd"
                       }
                     },
-                    {
-                      "name": "search_instrument_entities",
-                      "arguments": {
-                        "entity_type": "instruments",
-                        "filters": {
-                          "instrument_id": "52"
+                    "output": {
+                      "count": 1,
+                      "entity_type": "instruments",
+                      "results": [
+                        {
+                          "instrument_id": "52",
+                          "instrument_type": "equities",
+                          "name": "Vasquez Thomas and Mack Ltd",
+                          "status": "active",
+                          "ticker": "SXX8"
                         }
-                      },
-                      "output": {
-                        "count": 1,
-                        "entity_type": "instruments",
-                        "results": [
-                          {
-                            "instrument_id": "52",
-                            "instrument_type": "equities",
-                            "name": "Vasquez Thomas and Mack Ltd",
-                            "status": "active",
-                            "ticker": "SXX8"
-                          }
-                        ],
-                        "success": true
-                      }
+                      ],
+                      "success": true
+                    }
+                  },
+                  {
+                    "name": "perform_trade",
+                    "arguments": {
+                      "fund_id": "20",
+                      "fund_manager_approval": true,
+                      "instrument_id": "52",
+                      "price": 70.8102,
+                      "quantity": 300.0,
+                      "side": "buy",
+                      "trade_date": "2025-10-09"
                     },
-                    {
-                      "name": "perform_trade",
-                      "arguments": {
+                    "output": {
+                      "message": "Trade 2501 executed successfully",
+                      "success": true,
+                      "trade_data": {
+                        "created_at": "2025-10-01T00:00:00",
                         "fund_id": "20",
-                        "fund_manager_approval": true,
                         "instrument_id": "52",
                         "price": 70.8102,
                         "quantity": 300.0,
                         "side": "buy",
-                        "trade_date": "2025-10-09"
+                        "status": "executed",
+                        "trade_date": "2025-10-09",
+                        "trade_id": "2501"
                       },
-                      "output": {
-                        "message": "Trade 2502 executed successfully",
-                        "success": true,
-                        "trade_data": {
-                          "created_at": "2025-10-01T00:00:00",
-                          "fund_id": "20",
-                          "instrument_id": "52",
-                          "price": 70.8102,
-                          "quantity": 300.0,
-                          "side": "buy",
-                          "status": "executed",
-                          "trade_date": "2025-10-09",
-                          "trade_id": "2502"
-                        },
-                        "trade_id": "2502"
-                      }
-                    },
-                    {
-                      "name": "add_new_audit_trail",
-                      "arguments": {
-                        "action": "create",
-                        "reference_id": "2501",
-                        "reference_type": "trade"
-                      },
-                      "output": {
-                        "action": "create",
-                        "audit_trail_id": "3502",
-                        "created_at": "2025-10-01T00:00:00",
-                        "field_name": null,
-                        "new_value": null,
-                        "old_value": null,
-                        "reference_id": "2501",
-                        "reference_type": "trade"
-                      }
+                      "trade_id": "2501"
                     }
-                  ] ,
-        "outputs": [
-            "3502",
-            "52",
-            "2501"
-        ],
-        "edges": [
-          {
-            "from": "instruction",
-            "to": "search_user_entities",
-            "connection": {
-              "output": "entity_type, user_id",
-              "input": "entity_type, filters.user_id"
-            }
-          },
-          {
-            "from": "search_user_entities",
-            "to": "check_approval",
-            "connection": {
-              "output": "results[0].email",
-              "input": "requester_email"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "check_approval",
-            "connection": {
-              "output": "action",
-              "input": "action"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "search_fund_entities",
-            "connection": {
-              "output": "entity_type, name",
-              "input": "entity_type, filters.name"
-            }
-          },
-          {
-            "from": "search_fund_entities",
-            "to": "perform_trade",
-            "connection": {
-              "output": "results[0].fund_id",
-              "input": "fund_id"
-            }
-          },
-          {
-            "from": "check_approval",
-            "to": "perform_trade",
-            "connection": {
-              "output": "approval_valid",
-              "input": "fund_manager_approval"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "search_instrument_entities",
-            "connection": {
-              "output": "entity_type, instrument_id",
-              "input": "entity_type, filters.instrument_id"
-            }
-          },
-          {
-            "from": "search_instrument_entities",
-            "to": "perform_trade",
-            "connection": {
-              "output": "results[0].instrument_id",
-              "input": "instrument_id"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "perform_trade",
-            "connection": {
-              "output": "price, quantity, side, trade_date",
-              "input": "price, quantity, side, trade_date"
-            }
-          },
-          {
-            "from": "perform_trade",
-            "to": "add_new_audit_trail",
-            "connection": {
-              "output": "trade_id",
-              "input": "reference_id"
-            }
-          },
-          {
-            "from": "instruction",
-            "to": "add_new_audit_trail",
-            "connection": {
-              "output": "action, reference_type",
-              "input": "action, reference_type"
-            }
-          }
-        ],
-        "num_edges": 11
-    }
+                  },
+                  {
+                    "name": "add_new_audit_trail",
+                    "arguments": {
+                      "action": "create",
+                      "reference_id": "2501",
+                      "reference_type": "trade"
+                    },
+                    "output": {
+                      "action": "create",
+                      "audit_trail_id": "3501",
+                      "created_at": "2025-10-01T00:00:00",
+                      "field_name": null,
+                      "new_value": null,
+                      "old_value": null,
+                      "reference_id": "2501",
+                      "reference_type": "trade"
+                    }
+                  }
+                ],
+    "outputs": [
+      "96",
+      "20",
+      "52",
+      "2501",
+      "3501"
+    ],
+    "edges": [
+      {
+        "from": "instruction",
+        "to": "search_user_entities",
+        "connection": {
+          "output": "entity_type, first_name, last_name",
+          "input": "entity_type, first_name, last_name"
+        }
+      },
+      {
+        "from": "search_user_entities",
+        "to": "check_approval",
+        "connection": {
+          "output": "results[0].email",
+          "input": "requester_email"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "check_approval",
+        "connection": {
+          "output": "action",
+          "input": "action"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "search_fund_entities",
+        "connection": {
+          "output": "entity_type, name",
+          "input": "entity_type, name"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "search_instrument_entities",
+        "connection": {
+          "output": "entity_type, name",
+          "input": "entity_type, name"
+        }
+      },
+      {
+        "from": "search_fund_entities",
+        "to": "perform_trade",
+        "connection": {
+          "output": "results[0].fund_id",
+          "input": "fund_id"
+        }
+      },
+      {
+        "from": "check_approval",
+        "to": "perform_trade",
+        "connection": {
+          "output": "approval_valid",
+          "input": "fund_manager_approval"
+        }
+      },
+      {
+        "from": "search_instrument_entities",
+        "to": "perform_trade",
+        "connection": {
+          "output": "results[0].instrument_id",
+          "input": "instrument_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "perform_trade",
+        "connection": {
+          "output": "price, quantity, side, trade_date",
+          "input": "price, quantity, side, trade_date"
+        }
+      },
+      {
+        "from": "perform_trade",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "trade_id",
+          "input": "reference_id"
+        }
+      },
+      {
+        "from": "instruction",
+        "to": "add_new_audit_trail",
+        "connection": {
+          "output": "action, reference_type",
+          "input": "action, reference_type"
+        }
+      }
+    ],
+  "num_edges": 11
+  }
 }
