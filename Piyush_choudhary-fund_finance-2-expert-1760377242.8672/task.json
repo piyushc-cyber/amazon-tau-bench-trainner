@@ -1,0 +1,696 @@
+{
+  "env": "fund_finance",
+  "model_provider": "fireworks",
+  "model": "qwen3-coder-480b-a35b-instruct",
+  "num_trials": 3,
+  "temperature": 1,
+  "interface_num": 2,
+  "task": {
+    "user_id": "1",
+    "instruction": "You are Danielle Johnson, a compliance officer with email 'danielle.johnson@investment.com'. On October 13th, 2025, you want to process four new fund subscriptions $1200000 to 'Rogers-Orozco Strategic Fund', $800000 to 'Gonzalez Inc Value Fund', $2500000 to 'Travis, Larson and Dodson Value Fund', and $1800000 to 'Day and Sons Strategic Fund' for 'York, Brandt and Morrison'",
+    "actions": [
+    {
+      "name": "search_user_entities",
+      "arguments": {
+        "entity_type": "users",
+        "filters": {
+          "first_name": "Danielle",
+          "last_name": "Johnson",
+          "email": "danielle.johnson@investment.com"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "users",
+        "results": [
+          {
+            "created_at": "2023-10-18T09:04:44",
+            "email": "danielle.johnson@investment.com",
+            "first_name": "Danielle",
+            "last_name": "Johnson",
+            "role": "compliance_officer",
+            "status": "active",
+            "timezone": "America/New_York",
+            "updated_at": "2024-04-25T14:11:38",
+            "user_id": "1"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_investor_entities",
+      "arguments": {
+        "entity_type": "investors",
+        "filters": {
+          "name": "York, Brandt and Morrison"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "investors",
+        "results": [
+          {
+            "accreditation_status": "accredited",
+            "address": "4629 Kyle Lane, Lisahaven, CO 85176",
+            "contact_email": "york3486@finance.com",
+            "country": "France",
+            "created_at": "2023-04-07T00:17:12",
+            "date_of_incorporation": "1998-05-24",
+            "investor_id": "18",
+            "name": "York, Brandt and Morrison",
+            "registration_number": 358044766,
+            "source_of_funds": "government_grant",
+            "status": "onboarded",
+            "tax_id": "985-05-4235"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "check_approval",
+      "arguments": {
+        "action": "subscription_management",
+        "requester_email": "danielle.johnson@investment.com"
+      },
+      "output": {
+        "approval_valid": true,
+        "message": "Role 'compliance_officer' is directly authorized for action 'subscription_management'"
+      }
+    },
+    {
+      "name": "search_portfolio_entities",
+      "arguments": {
+        "entity_type": "portfolios",
+        "filters": {
+          "investor_id": "18"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "portfolios",
+        "results": [
+          {
+            "created_at": "2025-04-18T04:50:30",
+            "investor_id": "18",
+            "portfolio_id": "18",
+            "status": "active",
+            "updated_at": "2025-06-11T20:20:26"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "search_fund_entities",
+      "arguments": {
+        "entity_type": "funds",
+        "filters": {
+          "name": "Rogers-Orozco Strategic Fund"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "funds",
+        "results": [
+          {
+            "created_at": "2023-11-03T23:57:37",
+            "fund_id": "6",
+            "fund_type": "money_market_funds",
+            "manager_id": "45",
+            "name": "Rogers-Orozco Strategic Fund",
+            "size": 176553453.28,
+            "status": "open",
+            "updated_at": "2024-05-04T03:14:14"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "handle_subscription",
+      "arguments": {
+        "action": "create",
+        "subscription_data": {
+          "fund_id": "6",
+          "investor_id": "18",
+          "amount": 1200000,
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "fund_manager_approval": true,
+          "compliance_officer_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "message": "Subscription 2501 created successfully.",
+        "subscription_data": {
+          "amount": 1200000,
+          "approval_date": null,
+          "fund_id": "6",
+          "investor_id": "18",
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "subscription_id": "2501",
+          "updated_at": "2025-10-01T00:00:00"
+        },
+        "subscription_id": "2501",
+        "success": true
+      }
+    },
+    {
+      "name": "handle_portfolio_holdings",
+      "arguments": {
+        "action": "create",
+        "holding_data": {
+          "portfolio_id": "18",
+          "fund_id": "6",
+          "quantity": 1200000,
+          "cost_basis": 10.0,
+          "fund_manager_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "holding_data": {
+          "cost_basis": 10.0,
+          "created_at": "2025-10-01T12:00:00",
+          "fund_id": "6",
+          "holding_id": "1211",
+          "portfolio_id": "18",
+          "quantity": 1200000
+        },
+        "holding_id": "1211",
+        "message": "Portfolio holding 1211 created successfully for portfolio 18 with fund 6",
+        "success": true
+      }
+    },
+    {
+      "name": "add_new_audit_trail",
+      "arguments": {
+        "action": "create",
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      },
+      "output": {
+        "action": "create",
+        "audit_trail_id": "3501",
+        "created_at": "2025-10-01T00:00:00",
+        "field_name": null,
+        "new_value": null,
+        "old_value": null,
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      }
+    },
+    {
+      "name": "search_fund_entities",
+      "arguments": {
+        "entity_type": "funds",
+        "filters": {
+          "name": "Gonzalez Inc Value Fund"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "funds",
+        "results": [
+          {
+            "created_at": "2022-10-18T16:10:29",
+            "fund_id": "22",
+            "fund_type": "pension_funds",
+            "manager_id": "31",
+            "name": "Gonzalez Inc Value Fund",
+            "size": 276444130.54,
+            "status": "open",
+            "updated_at": "2022-12-05T21:03:24"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "handle_subscription",
+      "arguments": {
+        "action": "create",
+        "subscription_data": {
+          "fund_id": "22",
+          "investor_id": "18",
+          "amount": 800000,
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "fund_manager_approval": true,
+          "compliance_officer_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "message": "Subscription 2502 created successfully.",
+        "subscription_data": {
+          "amount": 800000,
+          "approval_date": null,
+          "fund_id": "22",
+          "investor_id": "18",
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "subscription_id": "2502",
+          "updated_at": "2025-10-01T00:00:00"
+        },
+        "subscription_id": "2502",
+        "success": true
+      }
+    },
+    {
+      "name": "handle_portfolio_holdings",
+      "arguments": {
+        "action": "create",
+        "holding_data": {
+          "portfolio_id": "18",
+          "fund_id": "22",
+          "quantity": 800000,
+          "cost_basis": 20.0,
+          "fund_manager_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "holding_data": {
+          "cost_basis": 20.0,
+          "created_at": "2025-10-01T12:00:00",
+          "fund_id": "22",
+          "holding_id": "1212",
+          "portfolio_id": "18",
+          "quantity": 800000
+        },
+        "holding_id": "1212",
+        "message": "Portfolio holding 1212 created successfully for portfolio 18 with fund 22",
+        "success": true
+      }
+    },
+    {
+      "name": "add_new_audit_trail",
+      "arguments": {
+        "action": "create",
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      },
+      "output": {
+        "action": "create",
+        "audit_trail_id": "3502",
+        "created_at": "2025-10-01T00:00:00",
+        "field_name": null,
+        "new_value": null,
+        "old_value": null,
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      }
+    },
+    {
+      "name": "search_fund_entities",
+      "arguments": {
+        "entity_type": "funds",
+        "filters": {
+          "name": "Travis, Larson and Dodson Value Fund"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "funds",
+        "results": [
+          {
+            "created_at": "2024-08-07T22:23:53",
+            "fund_id": "2",
+            "fund_type": "exchange_traded_funds",
+            "manager_id": "114",
+            "name": "Travis, Larson and Dodson Value Fund",
+            "size": 203807634.21,
+            "status": "open",
+            "updated_at": "2025-04-24T04:40:24"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "handle_subscription",
+      "arguments": {
+        "action": "create",
+        "subscription_data": {
+          "fund_id": "2",
+          "investor_id": "18",
+          "amount": 2500000,
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "fund_manager_approval": true,
+          "compliance_officer_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "message": "Subscription 2503 created successfully.",
+        "subscription_data": {
+          "amount": 2500000,
+          "approval_date": null,
+          "fund_id": "2",
+          "investor_id": "18",
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "subscription_id": "2503",
+          "updated_at": "2025-10-01T00:00:00"
+        },
+        "subscription_id": "2503",
+        "success": true
+      }
+    },
+    {
+      "name": "handle_portfolio_holdings",
+      "arguments": {
+        "action": "create",
+        "holding_data": {
+          "portfolio_id": "18",
+          "fund_id": "2",
+          "quantity": 2500000,
+          "cost_basis": 30.0,
+          "fund_manager_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "holding_data": {
+          "cost_basis": 30.0,
+          "created_at": "2025-10-01T12:00:00",
+          "fund_id": "2",
+          "holding_id": "1213",
+          "portfolio_id": "18",
+          "quantity": 2500000
+        },
+        "holding_id": "1213",
+        "message": "Portfolio holding 1213 created successfully for portfolio 18 with fund 2",
+        "success": true
+      }
+    },
+    {
+      "name": "add_new_audit_trail",
+      "arguments": {
+        "action": "create",
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      },
+      "output": {
+        "action": "create",
+        "audit_trail_id": "3503",
+        "created_at": "2025-10-01T00:00:00",
+        "field_name": null,
+        "new_value": null,
+        "old_value": null,
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      }
+    },
+    {
+      "name": "search_fund_entities",
+      "arguments": {
+        "entity_type": "funds",
+        "filters": {
+          "name": "Day and Sons Strategic Fund"
+        }
+      },
+      "output": {
+        "count": 1,
+        "entity_type": "funds",
+        "results": [
+          {
+            "created_at": "2025-01-09T21:18:03",
+            "fund_id": "16",
+            "fund_type": "exchange_traded_funds",
+            "manager_id": "108",
+            "name": "Day and Sons Strategic Fund",
+            "size": 343539058.11,
+            "status": "open",
+            "updated_at": "2025-01-20T09:54:36"
+          }
+        ],
+        "success": true
+      }
+    },
+    {
+      "name": "handle_subscription",
+      "arguments": {
+        "action": "create",
+        "subscription_data": {
+          "fund_id": "16",
+          "investor_id": "18",
+          "amount": 1800000,
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "fund_manager_approval": true,
+          "compliance_officer_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "message": "Subscription 2504 created successfully.",
+        "subscription_data": {
+          "amount": 1800000,
+          "approval_date": null,
+          "fund_id": "16",
+          "investor_id": "18",
+          "request_assigned_to": "1",
+          "request_date": "2025-10-13",
+          "status": "approved",
+          "subscription_id": "2504",
+          "updated_at": "2025-10-01T00:00:00"
+        },
+        "subscription_id": "2504",
+        "success": true
+      }
+    },
+    {
+      "name": "handle_portfolio_holdings",
+      "arguments": {
+        "action": "create",
+        "holding_data": {
+          "portfolio_id": "18",
+          "fund_id": "16",
+          "quantity": 1800000,
+          "cost_basis": 30.0,
+          "fund_manager_approval": true
+        }
+      },
+      "output": {
+        "action": "create",
+        "holding_data": {
+          "cost_basis": 30.0,
+          "created_at": "2025-10-01T12:00:00",
+          "fund_id": "16",
+          "holding_id": "1214",
+          "portfolio_id": "18",
+          "quantity": 1800000
+        },
+        "holding_id": "1214",
+        "message": "Portfolio holding 1214 created successfully for portfolio 18 with fund 16",
+        "success": true
+      }
+    },
+    {
+      "name": "add_new_audit_trail",
+      "arguments": {
+        "action": "create",
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      },
+      "output": {
+        "action": "create",
+        "audit_trail_id": "3504",
+        "created_at": "2025-10-01T00:00:00",
+        "field_name": null,
+        "new_value": null,
+        "old_value": null,
+        "reference_id": "18",
+        "reference_type": "portfolio"
+      }
+    }
+  ],
+  "outputs"  : ["1",
+  "18",
+  "6",
+  "2501",
+  "1211",
+  "3501",
+  "18",
+  "2502",
+  "1212",
+  "3502",
+  "2",
+  "2503",
+  "1213",
+  "3503",
+  "16",
+  "2504",
+  "1214",
+  "3504"
+  ],
+  "edges": [
+    {
+      "from": "instruction",
+      "to": "search_user_entities",
+      "connection": {
+        "output": "entity_type, first_name, last_name, email",
+        "input": "entity_type, first_name, last_name, email"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_investor_entities",
+      "connection": {
+        "output": "entity_type, name",
+        "input": "entity_type, name"
+      }
+    },
+    {
+      "from": "search_user_entities",
+      "to": "check_approval",
+      "connection": {
+        "output": "results[0].email",
+        "input": "requester_email"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "check_approval",
+      "connection": {
+        "output": "action",
+        "input": "action"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_portfolio_entities",
+      "connection": {
+        "output": "entity_type",
+        "input": "entity_type"
+      }
+    },
+    {
+      "from": "search_investor_entities",
+      "to": "search_portfolio_entities",
+      "connection": {
+        "output": "results[0].investor_id",
+        "input": "investor_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "search_fund_entities",
+      "connection": {
+        "output": "entity_type, name",
+        "input": "entity_type, name"
+      }
+    },
+    {
+      "from": "search_fund_entities",
+      "to": "handle_subscription",
+      "connection": {
+        "output": "results[0].fund_id",
+        "input": "fund_id"
+      }
+    },
+    {
+      "from": "search_investor_entities",
+      "to": "handle_subscription",
+      "connection": {
+        "output": "results[0].investor_id",
+        "input": "investor_id"
+      }
+    },
+    {
+      "from": "search_user_entities",
+      "to": "handle_subscription",
+      "connection": {
+        "output": "results[0].user_id",
+        "input": "request_assigned_to"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_subscription",
+      "connection": {
+        "output": "action, amount, request_date, status",
+        "input": "action, amount, request_date, status"
+      }
+    },
+    {
+      "from": "check_approval",
+      "to": "handle_subscription",
+      "connection": {
+        "output": "approval_valid, approval_valid",
+        "input": "fund_manager_approval, compliance_officer_approval"
+      }
+    },
+    {
+      "from": "search_portfolio_entities",
+      "to": "handle_portfolio_holdings",
+      "connection": {
+        "output": "results[0].portfolio_id",
+        "input": "portfolio_id"
+      }
+    },
+    {
+      "from": "search_fund_entities",
+      "to": "handle_portfolio_holdings",
+      "connection": {
+        "output": "results[0].fund_id",
+        "input": "fund_id"
+      }
+    },
+    {
+      "from": "handle_subscription",
+      "to": "handle_portfolio_holdings",
+      "connection": {
+        "output": "subscription_data.amount",
+        "input": "quantity"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "handle_portfolio_holdings",
+      "connection": {
+        "output": "action, cost_basis",
+        "input": "action, cost_basis"
+      }
+    },
+    {
+      "from": "check_approval",
+      "to": "handle_portfolio_holdings",
+      "connection": {
+        "output": "approval_valid",
+        "input": "fund_manager_approval"
+      }
+    },
+    {
+      "from": "search_portfolio_entities",
+      "to": "add_new_audit_trail",
+      "connection": {
+        "output": "results[0].portfolio_id",
+        "input": "reference_id"
+      }
+    },
+    {
+      "from": "instruction",
+      "to": "add_new_audit_trail",
+      "connection": {
+        "output": "action, reference_type",
+        "input": "action, reference_type"
+      }
+    }
+  ],
+  "num_edges": 19
+  }}
