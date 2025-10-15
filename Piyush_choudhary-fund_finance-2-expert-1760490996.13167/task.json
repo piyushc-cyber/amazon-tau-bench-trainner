@@ -190,17 +190,17 @@
       }
     }
   ],
-    "output": ["5",
-    "3",
-    "48"
+    "outputs": ["5",
+    "48",
+    "3501"
     ],
-    "edges": [
+       "edges": [
     {
       "from": "instruction",
       "to": "search_user_entities",
       "connection": {
         "output": "entity_type, first_name, last_name",
-        "input": "entity_type, first_name, last_name"
+        "input": "entity_type, filters.first_name, filters.last_name"
       }
     },
     {
@@ -208,7 +208,7 @@
       "to": "search_investor_entities",
       "connection": {
         "output": "entity_type, name",
-        "input": "entity_type, name"
+        "input": "entity_type, filters.name"
       }
     },
     {
@@ -216,7 +216,7 @@
       "to": "search_fund_entities",
       "connection": {
         "output": "entity_type, name",
-        "input": "entity_type, name"
+        "input": "entity_type, filters.name"
       }
     },
     {
@@ -224,7 +224,7 @@
       "to": "search_investment_flow_entities",
       "connection": {
         "output": "results[0].investor_id",
-        "input": "investor_id"
+        "input": "filters.investor_id"
       }
     },
     {
@@ -232,7 +232,7 @@
       "to": "search_investment_flow_entities",
       "connection": {
         "output": "results[0].fund_id",
-        "input": "fund_id"
+        "input": "filters.fund_id"
       }
     },
     {
@@ -248,7 +248,7 @@
       "to": "search_reporting_entities",
       "connection": {
         "output": "results[0].fund_id",
-        "input": "fund_id"
+        "input": "filters.fund_id"
       }
     },
     {
@@ -256,7 +256,7 @@
       "to": "search_reporting_entities",
       "connection": {
         "output": "results[0].investor_id",
-        "input": "investor_id"
+        "input": "filters.investor_id"
       }
     },
     {
@@ -264,7 +264,7 @@
       "to": "search_reporting_entities",
       "connection": {
         "output": "entity_type, report_type",
-        "input": "entity_type, report_type"
+        "input": "entity_type, filters.report_type"
       }
     },
     {
@@ -311,8 +311,8 @@
       "from": "instruction",
       "to": "create_report",
       "connection": {
-        "output": "export_period_end, report_date, report_type",
-        "input": "export_period_end, report_date, report_type"
+        "output": "report_type, report_date, export_period_end",
+        "input": "report_type, report_date, export_period_end"
       }
     },
     {
@@ -333,5 +333,4 @@
     }
   ],
   "num_edges": 17
-
   }}
