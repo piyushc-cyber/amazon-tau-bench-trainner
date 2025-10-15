@@ -152,20 +152,20 @@
     {
       "name": "create_report",
       "arguments": {
-        "export_period_end": "2025-10-14",
+        "export_period_end": "2025-10-13",
         "fund_id": "48",
         "generated_by": "5",
         "investor_id": "3",
-        "report_date": "2025-10-14",
+        "report_date": "2025-10-13",
         "report_type": "financial"
       },
       "output": {
         "created_at": "2025-10-01T00:00:00",
-        "export_period_end": "2025-10-14",
+        "export_period_end": "2025-10-13",
         "fund_id": "48",
         "generated_by": "5",
         "investor_id": "3",
-        "report_date": "2025-10-14",
+        "report_date": "2025-10-13",
         "report_id": "1001",
         "report_type": "financial",
         "status": "pending"
@@ -333,4 +333,5 @@
     }
   ],
   "num_edges": 17
+
   }}
